@@ -36,7 +36,15 @@ class MainAPIView(APIView):
     def delete(self, requests, *args, **kwargs):
         pk = kwargs.get("pk", None)
         if not pk:
-            return Response({"error": "Method PUT not allowed"})
+            return Response({"error": "Method DELETE not allowed"})
+
+        try:
+            instance = Article.objects.get(pk=pk)
+        except:
+            return Response({"error": "Method DELETE not allowed"})
+
+        instance.delete()
+        return Response({"post": "deleted"})
 
 # class MainAPIView(generics.ListAPIView):
 #     queryset = Article.objects.all()
