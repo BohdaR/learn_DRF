@@ -5,25 +5,31 @@ from rest_framework.renderers import JSONRenderer
 from main.models import Article
 
 
-class MainSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    content = serializers.CharField()
-    time_created = serializers.DateTimeField(read_only=True)
-    time_updated = serializers.DateTimeField(read_only=True)
-    is_published = serializers.BooleanField(default=True)
-    cat_id = serializers.IntegerField()
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = "__all__"
 
-    def create(self, validated_data):
-        return Article.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get("title", instance.title)
-        instance.content = validated_data.get("content", instance.content)
-        instance.time_updated = validated_data.get("time_created", instance.time_updated)
-        instance.is_published = validated_data.get("time_updated", instance.is_published)
-        instance.cat_id = validated_data.get("is_published", instance.cat_id)
-        instance.save()
-        return instance
+# class MainSerializer(serializers.Serializer):
+#     title = serializers.CharField(max_length=255)
+#     content = serializers.CharField()
+#     time_created = serializers.DateTimeField(read_only=True)
+#     time_updated = serializers.DateTimeField(read_only=True)
+#     is_published = serializers.BooleanField(default=True)
+#     cat_id = serializers.IntegerField()
+#
+#     def create(self, validated_data):
+#         return Article.objects.create(**validated_data)
+#
+#     def update(self, instance, validated_data):
+#         instance.title = validated_data.get("title", instance.title)
+#         instance.content = validated_data.get("content", instance.content)
+#         instance.time_updated = validated_data.get("time_created", instance.time_updated)
+#         instance.is_published = validated_data.get("time_updated", instance.is_published)
+#         instance.cat_id = validated_data.get("is_published", instance.cat_id)
+#         instance.save()
+#         return instance
 
 
 # class MainModel:
@@ -46,7 +52,6 @@ class MainSerializer(serializers.Serializer):
 #     serializer = MainSerializer(data=data)
 #     serializer.is_valid()
 #     print(serializer.validated_data)
-
 
 
 # class MainSerializer(serializers.Serializer):

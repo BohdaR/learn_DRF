@@ -4,16 +4,21 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from main.models import Article
-from main.serializers import MainSerializer
+from main.serializers import ArticleSerializer
 
 
-class MainAPIView(APIView):
+class ArticleAPIList(generics.ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+
+class ArticleAPIView(APIView):
     def get(self, requests):
         lst = Article.objects.all().values()
-        return Response({'posts': MainSerializer(lst, many=True).data})
+        return Response({'posts': ArticleSerializer(lst, many=True).data})
 
     def post(self, requests):
-        serializer = MainSerializer(data=requests.data)
+        serializer = ArticleSerializer(data=requests.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'title': serializer.data})
@@ -28,7 +33,7 @@ class MainAPIView(APIView):
         except:
             return Response({"error": "Method PUT not allowed"})
 
-        serializer = MainSerializer(data=requests.data, instance=instance)
+        serializer = ArticleSerializer(data=requests.data, instance=instance)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"post": serializer.data})
