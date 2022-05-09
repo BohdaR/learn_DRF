@@ -7,6 +7,10 @@ from main.models import Article
 from main.serializers import ArticleSerializer
 
 
+def article_view(request):
+    return render(request, 'main/index.html')
+
+
 class ArticleAPIList(generics.ListCreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
