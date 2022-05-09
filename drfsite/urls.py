@@ -19,8 +19,10 @@ from main.views import *
 from rest_framework import routers
 
 
-router = routers.SimpleRouter()
-router.register(r'article', ArticleViewSet)
+# router = routers.SimpleRouter()
+
+router = routers.DefaultRouter()
+router.register(r'article', ArticleViewSet, basename='article')
 
 
 urlpatterns = [
