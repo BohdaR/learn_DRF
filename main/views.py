@@ -1,6 +1,6 @@
 from django.forms import model_to_dict
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from main.models import Article
@@ -11,19 +11,25 @@ def article_view(request):
     return render(request, 'main/index.html')
 
 
-class ArticleAPIList(generics.ListCreateAPIView):
+class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
 
-class ArticleAPIUpdate(generics.UpdateAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
+# class ArticleAPIList(generics.ListCreateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+#
+# class ArticleAPIUpdate(generics.UpdateAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
+#
+#
+# class ArticleAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Article.objects.all()
+#     serializer_class = ArticleSerializer
 
-
-class ArticleAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializer
 
 # class ArticleAPIView(APIView):
 #     def get(self, requests):

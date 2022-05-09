@@ -16,12 +16,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from main.views import *
+from rest_framework import routers
+
+
+router = routers.SimpleRouter()
+router.register(r'article', ArticleViewSet)
+
 
 urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
-    path('api/v1/articlelist/', ArticleAPIList.as_view()),
-    path('api/v1/articlelist/<int:pk>/', ArticleAPIUpdate.as_view()),
-    path('api/v1/articledetail/<int:pk>/', ArticleAPIDetailView.as_view()),
+    path('api/v1/', include(router.urls))
+
+    # path('api/v1/articlelist/', ArticleViewSet.as_view({'get': 'list'})),
+    # path('api/v1/articlelist/<int:pk>/', ArticleViewSet.as_view({'put': 'update'})),
+
+    # path('api/v1/articlelist/', ArticleAPIList.as_view()),
+    # path('api/v1/articlelist/<int:pk>/', ArticleAPIUpdate.as_view()),
+    # path('api/v1/articledetail/<int:pk>/', ArticleAPIDetailView.as_view()),
 
 ]
